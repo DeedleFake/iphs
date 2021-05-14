@@ -77,3 +77,17 @@ type response struct {
 	Success bool        `json:"success"`
 	Status  int         `json:"status"`
 }
+
+// clientConfig is just a redefinition of Client to prevent manual
+// usage of ClientOptions.
+type clientConfig Client
+
+// A ClientOption provides optional configuration for a Client.
+type ClientOption func(*clientConfig)
+
+// WithHTTPClient specifies the *http.Client to use for requests.
+func WithHTTPClient(c *http.Client) ClientOption {
+	return func(config *clientConfig) {
+		config.client = c
+	}
+}

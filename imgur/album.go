@@ -1,7 +1,5 @@
 package imgur
 
-import "net/http"
-
 type Album struct {
 	ID              string    `json:"id"`
 	Title           string    `json:"title"`
@@ -35,18 +33,4 @@ func (c *Client) Albums(username string) ([]Album, error) {
 	}
 	err := c.get(&rsp, "account", username, "albums")
 	return *rsp.Data.(*[]Album), err
-}
-
-// clientConfig is just a redefinition of Client to prevent manual
-// usage of ClientOptions.
-type clientConfig Client
-
-// A ClientOption provides optional configuration for a Client.
-type ClientOption func(*clientConfig)
-
-// WithHTTPClient specifies the *http.Client to use for requests.
-func WithHTTPClient(c *http.Client) ClientOption {
-	return func(config *clientConfig) {
-		config.client = c
-	}
 }
