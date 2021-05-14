@@ -71,29 +71,6 @@ func (c *Client) get(data *response, endpoint ...interface{}) error {
 	return nil
 }
 
-// Albums returns a list of the albums for a given user.
-func (c *Client) Albums(username string) ([]string, error) {
-	rsp := response{
-		Data: new([]string),
-	}
-	err := c.get(&rsp, "account", username, "albums")
-	return *rsp.Data.(*[]string), err
-}
-
-// clientConfig is just a redefinition of Client to prevent manual
-// usage of ClientOptions.
-type clientConfig Client
-
-// A ClientOption provides optional configuration for a Client.
-type ClientOption func(*clientConfig)
-
-// WithHTTPClient specifies the *http.Client to use for requests.
-func WithHTTPClient(c *http.Client) ClientOption {
-	return func(config *clientConfig) {
-		config.client = c
-	}
-}
-
 // response is the standard, basic response format that the API returns.
 type response struct {
 	Data    interface{} `json:"data"`
